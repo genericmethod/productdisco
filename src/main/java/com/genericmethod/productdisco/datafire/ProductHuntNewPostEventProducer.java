@@ -4,6 +4,7 @@ import com.genericmethod.datafire.event.DataFireEvent;
 import com.genericmethod.datafire.event.DataFireEventProducer;
 import com.genericmethod.productdisco.datafire.enums.ProductHuntEventType;
 import com.genericmethod.productdisco.datafire.model.Post;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.social.twitter.api.Twitter;
@@ -28,6 +29,9 @@ public class ProductHuntNewPostEventProducer extends DataFireEventProducer<Post,
 
         for (DataFireEvent<Post, ProductHuntEventType> event : events) {
             twitter.timelineOperations().updateStatus(event.getMessage().getName() + " now on @ProductHunt ! " + event.getMessage().getDiscussionUrl());
+            if(StringUtils.isNotBlank(event.getMessage().getUser().getTwitterUsername())) {
+                twitter.friendOperations().follow(event.getMessage().getUser().getTwitterUsername());
+            }
         }
 
     }
