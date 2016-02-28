@@ -31,8 +31,11 @@ public class ProductHuntNewPostEventProducer extends DataFireEventProducer<Post,
                 environment.getProperty("twitter.accessTokenSecret"));
 
         for (DataFireEvent<Post, ProductHuntEventType> event : events) {
-            twitter.timelineOperations().updateStatus(event.getMessage().getName() + " now on @ProductHunt ! " + event.getMessage().getDiscussionUrl());
-            log.info(event.getMessage().getName() + " now on @ProductHunt ! " + event.getMessage().getDiscussionUrl());
+
+            final String tweet = event.getMessage().getName() + " now on @ProductHunt ! " + event.getMessage().getDiscussionUrl();
+
+            twitter.timelineOperations().updateStatus(tweet);
+            log.info(tweet);
             if(StringUtils.isNotBlank(event.getMessage().getUser().getTwitterUsername())) {
                 twitter.friendOperations().follow(event.getMessage().getUser().getTwitterUsername());
                 log.info("Following " + event.getMessage().getUser().getTwitterUsername());
