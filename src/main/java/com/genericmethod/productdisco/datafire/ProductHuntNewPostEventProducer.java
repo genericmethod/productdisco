@@ -5,6 +5,7 @@ import com.genericmethod.datafire.event.DataFireEventProducer;
 import com.genericmethod.productdisco.datafire.enums.ProductHuntEventType;
 import com.genericmethod.productdisco.datafire.model.Post;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.social.twitter.api.Twitter;
@@ -15,6 +16,8 @@ import java.util.List;
 
 @Component
 public class ProductHuntNewPostEventProducer extends DataFireEventProducer<Post, ProductHuntEventType> {
+
+    private static final Logger log = Logger.getLogger(ProductHuntNewPostEventProducer.class);
 
     @Autowired
     Environment environment;
@@ -29,8 +32,10 @@ public class ProductHuntNewPostEventProducer extends DataFireEventProducer<Post,
 
         for (DataFireEvent<Post, ProductHuntEventType> event : events) {
             twitter.timelineOperations().updateStatus(event.getMessage().getName() + " now on @ProductHunt ! " + event.getMessage().getDiscussionUrl());
+            log.info(event.getMessage().getName() + " now on @ProductHunt ! " + event.getMessage().getDiscussionUrl());
             if(StringUtils.isNotBlank(event.getMessage().getUser().getTwitterUsername())) {
                 twitter.friendOperations().follow(event.getMessage().getUser().getTwitterUsername());
+                log.info("Following " + event.getMessage().getUser().getTwitterUsername());
             }
         }
 
