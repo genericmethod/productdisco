@@ -1,5 +1,5 @@
 # Product Disco
-Product Disco is a Twitter bot (@productdisco) that keeps an eye on the freshest products being posted on Product Hunt.
+Product Disco is a Twitter bot [(@productdisco)](http://twitter.com/productdisco) that keeps an eye on the freshest products being posted on Product Hunt.
 
 ## Tech Stack
 
@@ -7,6 +7,6 @@ Product Disco is a Twitter bot (@productdisco) that keeps an eye on the freshest
 - DataFire
 - Spring Boot
 - Spring Social
-- Heroku.
+- Heroku
 
 
